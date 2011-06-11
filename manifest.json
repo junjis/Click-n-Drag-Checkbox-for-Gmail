@@ -1,7 +1,7 @@
 {
-  "name": "Drag Checkbox for Gmail",
+  "name": "Click-n-Drag Checkbox for Gmail",
   "version": "1.0.0",
-  "description": "Drag and check multiple checkboxes", 
+  "description": "Select/unselect multiple checkboxes by click and drag!", 
   "icons": {
 	"48" : "dnc-icon48.png",
 	"128" : "dnc-icon128.png"
@@ -15,7 +15,7 @@
 		"EmailTable.js",
 		"DragCheck.js",
 		"EmailTableNotifier.js",
-	  	"drag-checkbox.js"
+	  	"OnReady.js"
 		]
     }
   ]
