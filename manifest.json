@@ -1,7 +1,11 @@
 {
   "name": "Drag Checkbox for Gmail",
   "version": "1.0.0",
-  "description": "Drag and check multiple checkboxes",  
+  "description": "Drag and check multiple checkboxes", 
+  "icons": {
+	"48" : "dnc-icon48.png",
+	"128" : "dnc-icon128.png"
+	}, 
   "content_scripts": [
     {
       "matches": ["https://mail.google.com/*"],
