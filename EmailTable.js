@@ -21,6 +21,23 @@ function GmailTable() {
 	//this.table = this.canvas_frame.getElementById(':pg');
 	
 }
+GmailTable.prototype.sortRowsBy = function() {
+    
+    var $rows = this.getRows();
+    var $parent = $rows.parent();
+    var rows = $rows.detach().get();
+    
+    rows.sort(function(a, b) {
+        // 5th td | 1st div | 1st div | 2nd div | 1st span
+        var av = $(a).find("div:eq(0) div:eq(0) div:eq(1) span:eq(0)").text();
+        var bv = $(b).find("div:eq(0) div:eq(0) div:eq(1) span:eq(0)").text();
+        return av - bv;
+    });
+    
+    for (var i=0; i<rows.length; i++) {
+        $parent.append(rows[i]);
+    }
+};
 GmailTable.prototype.getRows = function() {
     var table = this.getTable();
     var $sibs = $(table).parent().siblings().find("table");
