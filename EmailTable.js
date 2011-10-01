@@ -21,6 +21,13 @@ function GmailTable() {
 	//this.table = this.canvas_frame.getElementById(':pg');
 	
 }
+GmailTable.prototype.getRows = function() {
+    var table = this.getTable();
+    var $sibs = $(table).parent().siblings().find("table");
+    var $table = ($sibs.length)? $(table).add($sibs.toArray()) : $(table);
+    return $table.find("tbody tr");
+};
+
 GmailTable.prototype.getCheckboxes = function() {
 	var table = this.getTable();
 	var $sibs = $(table).parent().siblings().find("table");
