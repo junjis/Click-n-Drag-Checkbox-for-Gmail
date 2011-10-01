@@ -29,8 +29,8 @@ GmailTable.prototype.sortRowsBy = function() {
     
     rows.sort(function(a, b) {
         // 5th td | 1st div | 1st div | 2nd div | 1st span
-        var av = $(a).find("div:eq(0) div:eq(0) div:eq(1) span:eq(0)").text();
-        var bv = $(b).find("div:eq(0) div:eq(0) div:eq(1) span:eq(0)").text();
+        var av = $(a).find("div:nth-child(1) div:nth-child(1) div:nth-child(2) span:nth-child(1)").text();
+        var bv = $(b).find("div:nth-child(1) div:nth-child(1) div:nth-child(2) span:nth-child(1)").text();
         return av - bv;
     });
     
