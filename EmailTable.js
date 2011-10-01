@@ -21,22 +21,33 @@ function GmailTable() {
 	//this.table = this.canvas_frame.getElementById(':pg');
 	
 }
-GmailTable.prototype.sortRowsBy = function() {
+GmailTable.prototype.sortRowsBySubject = function() {
+    
     
     var $rows = this.getRows();
     var $parent = $rows.parent();
     var rows = $rows.detach().get();
     
-    rows.sort(function(a, b) {
+    rows = rows.sort(function(a, b) {
         // 5th td | 1st div | 1st div | 2nd div | 1st span
         var av = $(a).find("div:nth-child(1) div:nth-child(1) div:nth-child(2) span:nth-child(1)").text();
         var bv = $(b).find("div:nth-child(1) div:nth-child(1) div:nth-child(2) span:nth-child(1)").text();
         return av - bv;
     });
     
-    for (var i=0; i<rows.length; i++) {
-        $parent.append(rows[i]);
+    if (this.asc) {
+        for (var i=0; i<rows.length; i++) {
+            $parent.prepend(rows[i]);
+        }
     }
+    else {
+        for (var i=0; i<rows.length; i++) {
+            $parent.prepend(rows[i]);
+        }
+    }
+    this.asc = (this.asc)? false : true;
+    
+    return rows;
 };
 GmailTable.prototype.getRows = function() {
     var table = this.getTable();
