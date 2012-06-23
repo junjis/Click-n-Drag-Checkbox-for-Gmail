@@ -27,6 +27,7 @@ function GmailTable() {
 	this.canvas_frame.contentDocument.head.appendChild(styleElem);
 	
 }
+
 GmailTable.prototype.classNames = {
 	'checkbox': 'T-Jo-auh'
 };
