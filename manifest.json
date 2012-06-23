@@ -1,6 +1,6 @@
-{
-  "name": "Click-n-Drag Checkbox for Gmail",
-  "version": "1.0.0",
+﻿{
+  "name": "Click-n-Drag Checkbox for Gmail™",
+  "version": "1.2.0",
   "description": "Select/unselect multiple checkboxes by click and drag!", 
   "icons": {
 	"48" : "dnc-icon48.png",
@@ -9,6 +9,8 @@
   "content_scripts": [
     {
       "matches": ["https://mail.google.com/*"],
+	  "css": [
+		"DragCheck.css"],
       "js": [
 	  	"lib/jquery/jquery-1.5.1.min.js", 
 		"Util.js",

@@ -39,10 +39,11 @@ EmailTableNotifier.prototype.initEvents = function() {
 	// table ready after menu is clicked
 	var menu = mailBox.getMenu();
 	
-	
 	$(menu).click(function(e) {
 		self.notifyWhenTableReady();
 	});
+	
+	var table = mailBox.getTable();
 	
 	this.startWatchingTableChange();
 };
@@ -63,14 +64,14 @@ EmailTableNotifier.prototype.register = function(observer) {
  * Notifications
  */
 EmailTableNotifier.prototype.notify = function() {
-	
 	var table = this.mailBox.getTable();
 	
 	this.hasNotified = true;
 	this.lastTable = table;
-	this.lastItem = $(table).find("input:checkbox").eq(0)[0];
+	this.lastItem = $(table).find("input:checkbox, .T-Jo-auh").eq(0)[0];
 
 	//alert("Table is ready");
+	//window.location.hash = "Table is ready";
 	
 	for (var i=0; i<this.observers.length; i++) {
 		this.observers[i].update(this.mailBox);
@@ -87,13 +88,15 @@ EmailTableNotifier.prototype.notifyWhenTableReady = function() {
 	handle = setInterval(function() {
 		
 		var curTable = mailBox.getTable();
-		if (curTable != origTable) {
+		//if (curTable != origTable) {
+		if (mailBox.compareTable(curTable, oriTable) == false) {
 			
 			clearInterval(handle);
 			self.notify();				
 		}
 		if (++count == 30) {
 			clearInterval(handle);
+			self.notify();
 		}
 		
 	}, 100);
@@ -136,7 +139,7 @@ EmailTableNotifier.prototype.onTableModified = function() {
 	
 	var table = mailBox.getTable();
 	var lastTable = self.lastTable;
-	var item = $(table).find("input:checkbox").eq(0)[0];
+	var item = $(table).find("input:checkbox, .T-Jo-auh").eq(0)[0];
 	var lastItem = self.lastItem;
 	
 	// if the table in the page is different from the last one, or

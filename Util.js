@@ -29,6 +29,37 @@ var Util = {
 			} while (obj = obj.offsetParent);
 		}
 		return {top: curTop, left: curLeft};
+	},
+	isChecked: function(elem) {
+		var tname = elem.tagName;
+		var isChecked = true;
+		tname = tname.toLowerCase();		
+		
+		if (tname == "input") {
+			isChecked = $(elem).attr("checked");
+		}
+		else if (tname == "div") {
+			isChecked = (elem.parentElement.getAttribute("aria-checked") == "true")? true : false;
+		}
+		
+		return isChecked;
+	},
+	
+	compareArray: function(a, b) {
+	
+		if (a.length != b.length) { return false; }
+		
+		var a = a.sort(),
+			b = b.sort();
+			
+		for (var i=0; b[i]; i++) {
+		
+			if (a[i] !== b[i]) { 
+				return false;
+			}
+		}
+		
+		return true;
 	}
 	
 };

@@ -77,6 +77,22 @@ DragCheck.prototype.init = function() {
 	}
 		
 	this.initEvents();
+	
+	/****************************************/
+	/* TODO
+	var checkboxes = mailBox.getCheckboxes();
+	this.checkboxes = checkboxes;
+	
+	for (var i=0; i<checkboxes.length; i++) {
+		var row = checkboxes[i].getRow();
+		var top = Util.findPos(row).top + document.body.scrollTop;
+		this.tops.push(top);
+		this.bottoms.push(top + $(row).height());
+		this.visited.push(false);
+	}
+	this.initEvents();
+	*/
+	
 };
 DragCheck.prototype.initEvents = function() {
 	var self = this, checkboxes = this.checkboxes, mailBox = this.mailBox;
@@ -102,8 +118,13 @@ DragCheck.prototype.onCheckPressed = function(e) {
 	
 	self.isMouseDown = true;
 	self.startPos = e.pageY;
+	if (self.mailBox.isNewLook())
+		self.startPos += self.mailBox.getTableScrollTop();
 	
-	if ($(this).attr("checked"))
+	//window.location.hash = Util.isChecked(this);
+	
+	//if ($(this).attr("checked"))
+	if (Util.isChecked(this))
 		self.isChecking = false;
 	else
 		self.isChecking = true;
@@ -111,8 +132,10 @@ DragCheck.prototype.onCheckPressed = function(e) {
 	self.firstCheckbox = this;
 	
 	for (var i=0; i<checkboxes.length; i++) {
-		self.origs[i] = $(checkboxes[i]).attr("checked");
+		self.origs[i] = Util.isChecked(checkboxes[i]);//$(checkboxes[i]).attr("checked");
 	}
+	
+	return false;
 };
 DragCheck.prototype.onDocMouseMove = function(e) {
 	var self = e.data.self;
@@ -121,6 +144,8 @@ DragCheck.prototype.onDocMouseMove = function(e) {
 	
 	if (self.isMouseDown) {
 		curPos = e.pageY;
+		if (self.mailBox.isNewLook())
+			curPos += self.mailBox.getTableScrollTop();
 		
 		if (Math.abs(curPos - startPos) > 10 && !dragStarted) {
 			self.dragStarted = true;
@@ -130,21 +155,27 @@ DragCheck.prototype.onDocMouseMove = function(e) {
 		if (self.dragStarted)
 			self.onDrag(e);
 	}
+	
+
 };
 DragCheck.prototype.onDragStarted = function() {
 	var checkbox = this.firstCheckbox;
-	var isChecked = $(checkbox).attr("checked");
+	var isChecked = Util.isChecked(checkbox);//$(checkbox).attr("checked");
 	var isChecking = this.isChecking;
 	
 	if (isChecking && !isChecked)
 		Util.fireClick(checkbox);
 	else if (!isChecking && isChecked)
 		Util.fireClick(checkbox);
+
 };
 DragCheck.prototype.onDrag = function(e) {
 	var self = this, checkboxes = this.checkboxes;
 	var curPos = e.pageY, startPos = self.startPos;
 	var isChecking = this.isChecking;
+	if (this.mailBox.isNewLook()) {
+		curPos += this.mailBox.getTableScrollTop();
+	}
 	
 	// we have upper & lower limits
 	var pos;
@@ -159,7 +190,7 @@ DragCheck.prototype.onDrag = function(e) {
 	for (var i=0; i<checkboxes.length; i++) {
 		
 		if (bottoms[i] > lower && tops[i] < upper) {
-			var isChecked = $(checkboxes[i]).attr("checked");
+			var isChecked = Util.isChecked(checkboxes[i]);//$(checkboxes[i]).attr("checked");
 			
 			if (isChecking) {
 				if (!isChecked)
@@ -175,7 +206,7 @@ DragCheck.prototype.onDrag = function(e) {
 			if (visited[i]) {
 				
 				var wasChecked = origs[i];
-				var isChecked = $(checkboxes[i]).attr("checked");
+				var isChecked = Util.isChecked(checkboxes[i]);//$(checkboxes[i]).attr("checked");
 				if (wasChecked && isChecked) {
 					// do nothing
 				}
@@ -191,7 +222,7 @@ DragCheck.prototype.onDrag = function(e) {
 			}
 		}
 	}
-	//$(self.firstCheckbox).focus();
+	//$(self.firstCheckbox).focus();		
 };
 DragCheck.prototype.onDocMouseUp = function(e) {
 	var self = e.data.self, checkboxes = self.checkboxes;
