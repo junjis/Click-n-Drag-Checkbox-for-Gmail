@@ -89,7 +89,7 @@ EmailTableNotifier.prototype.notifyWhenTableReady = function() {
 		
 		var curTable = mailBox.getTable();
 		//if (curTable != origTable) {
-		if (mailBox.compareTable(curTable, oriTable) == false) {
+		if (mailBox.compareTable(curTable, origTable) == false) {
 			
 			clearInterval(handle);
 			self.notify();				
@@ -132,6 +132,7 @@ EmailTableNotifier.prototype.notifyWhenFirstTableReady = function() {
  */
 EmailTableNotifier.prototype.onTableModified = function() {
 	var self = this, mailBox = this.mailBox;
+	
 	
 	var doc = mailBox.getDocument();
 	
